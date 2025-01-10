@@ -1,0 +1,147 @@
+using System;
+using Temp;
+using TempBLL;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        //int? a = null; //we can assign null value to primary types using ? operator
+        //if(a.HasValue) // adding it generates new methods like HasValue
+        //    Console.WriteLine(a.Value);
+
+        //Console.WriteLine("The value is : " + (a ?? 0)); //if a is null then right side will get evaluated (function,value,...)
+        //List<int> list = new List<int>();
+        //int? b = null;
+        //list.Add(a ??= 0); //right side will get evaluate
+        //list.Add(b ??= 0);
+        //Console.WriteLine(list.Count);
+
+        //var usr = new { id = 123, Name = "hello", Age = 10, Hobbies = new { Games = "Cricket" } };
+        //Console.WriteLine(usr);
+        //Console.WriteLine(usr.GetType());
+        //Console.WriteLine(usr.Name);
+        //We can create anonymous objects, they are readonly
+        //we can pass to functions using dynamic keyword, but not recommended
+
+        //User a = new(1, "hello", 20);
+        //ChangeRef(ref a); //Directly passed the ref, so every change is reflected
+        //Console.WriteLine(a);
+        //Change(a); //changes are reflected
+        //Console.WriteLine(a);
+        //NotChange(a); //changes are not reflected
+        //Console.WriteLine(a);
+
+        //int a = 10, b = 20;
+        //NotChange(a, b); //pass by value, new copy variable created
+        //Console.WriteLine(a + " " + b);
+        //Change(ref a, ref b); //pass by reference, ref is passed
+        //Console.WriteLine(a + " " + b);
+
+        //var a = 10;
+        //Console.WriteLine(a);
+        //var is just a syntacting sugar
+        //datatype is found at compile time
+        //must be initialized when declared
+        //Intellisense is offered, cannot be used as return type in functions
+
+        //dynamic a = 10;
+        //Console.WriteLine(a);
+        //a = "hello";
+        //Console.WriteLine(a);
+        // dynamic can be used to use like python variables
+        // Errors are found at runtime
+        // Intellisense is lost, works similar to object type under the hood but better performance
+        // can be declared without initializing, can be used as return type in functions
+
+        //int num = 10;
+        //object ob = num; //boxing
+        ////ob = ob + 10; -> error, object + int
+        //ob = (int)ob + 10; //Unboxing
+        //Console.WriteLine(ob);
+        //Console.WriteLine(ob.GetType());
+        //Boxing and Unboxing drains performance, better to avoid
+
+        //Animal a = new("Temp",10,"temp");
+        //a.MakeNoise();
+        //Dog d = new("Stark", 10, "Husky", 1000);
+        //Cat c = new("Captain", 10, "Orange", 500);
+        //Console.WriteLine(d.Breed);
+        //d.Cost();
+        //d.MakeNoise();
+        //c.Cost();
+        //c.MakeNoise();
+
+
+        /*
+        // Console colors
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.BackgroundColor = ConsoleColor.Red;
+        */
+
+        //Console.WriteLine(Add(1,2));
+        //Console.WriteLine(Add(1l, 2l));
+        //User usr = new(1, "hello", 20);
+        //User usr2 = new(2, "hello", 20);
+        //User usr3 = new(3, "hello", 20);
+
+        //List<User> users = [usr, usr2, usr3];
+
+        //foreach (User u in users)
+        //{
+        //    Console.WriteLine($"Name = {u.Name} , Age = {u.Age}");
+        //}
+
+    }
+
+    //public static void Change(ref int a, ref int b)
+    //{
+    //    a = b = 0;
+    //}
+
+    //public static void NotChange(int a, int b)
+    //{
+    //    a = b = 0;
+    //}
+
+    //public static void Change(User a)
+    //{
+    //    //a = new User(); //if used, then changes are local
+    //    a.Name = "Changed";
+    //}
+
+    //public static void NotChange(User a)
+    //{
+    //    a = new User();
+    //    a.Name = "Not changed";
+    //}
+
+    //public static void ChangeRef(ref User a)
+    //{
+    //    a.Name = "Changed";
+    //}
+
+    /// <summary>
+    /// This method takes two int params to add them
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns>Returns the sum of two numbers</returns>
+    //static int Add(int a, int b)
+    //{
+    //    Console.WriteLine("In int add");
+    //    return a + b;
+    //}
+
+    /// <summary>
+    /// This method takes two long params to add them
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns>Returns the sum of two numbers</returns>
+    //static long Add(long a, long b)
+    //{
+    //    Console.WriteLine("In long add");
+    //    return a + b;
+    //}
+}
