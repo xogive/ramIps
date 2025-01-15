@@ -1,0 +1,210 @@
+using System;
+using System.Text;
+
+namespace EnDe
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("*********************** Welcome to EnDe ***********************");
+            Console.WriteLine("You can encrypt and decrypt files and text using EnDe");
+            int ch = 0;
+            do
+            {
+                Console.WriteLine("         MENU            ");
+                Console.WriteLine("         1.Encrypt Text      ");
+                Console.WriteLine("         2.Decrypt Text      ");
+                Console.WriteLine("         3.Encrypt File      ");
+                Console.WriteLine("         4.Decrypt File      ");
+                Console.WriteLine("         5.Exit          ");
+                try
+                {
+                    ch = Convert.ToInt32(Console.ReadLine());
+                    string text = "";
+                    int key = 0;
+                    switch (ch)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the text to encrypt : ");
+                            text = GetText();
+                            Console.WriteLine("Enter the key to encrypt : ");
+                            key = GetNum();
+                            Console.WriteLine("Encrypted text -> " + AlgoCrypt.Encrypt(text, key));
+                            break;
+                        case 2:
+                            Console.WriteLine("Enter the text to decrypt : ");
+                            text = GetText();
+                            Console.WriteLine("Enter the key to decrypt : ");
+                            key = GetNum();
+                            Console.WriteLine("Decrypted text -> " + AlgoCrypt.Decrypt(text, key));
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter the file path to encrypt the file : ");
+                            text = GetText();
+                            Console.WriteLine("Enter the key to encrypt : ");
+                            key = GetNum();
+                            AlgoCrypt.EncryptFile(text, key);
+                            break;
+                        case 4:
+                            Console.WriteLine("Enter the file path to decrypt the file : ");
+                            text = GetText();
+                            Console.WriteLine("Enter the key to decrypt : ");
+                            key = GetNum();
+                            AlgoCrypt.DecryptFile(text, key);
+                            break;
+                        case 5:
+                            Console.WriteLine("Exiting.....");
+                            break;
+                        default:
+                            Console.WriteLine("No such option, Enter again");
+                            break;
+
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Enter a number");
+                    ch = 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+            } while (ch != 5);
+
+        }
+
+        public static string GetText()
+        {
+            string str;
+            do
+            {
+                str = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(str))
+                {
+                    Console.WriteLine("Enter a valid string....");
+                }
+            } while (string.IsNullOrWhiteSpace(str));
+
+            return str;
+        }
+
+        public static string GetTimeStamp()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        public static int GetNum()
+        {
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out int num))
+                {
+                    return num;
+                }
+                else
+                {
+                    Console.WriteLine("Enter a valid number : ");
+                }
+            }
+        }
+    }
+}
+
+
+using System;
+using System.Text;
+using System.IO;
+
+namespace EnDe
+{
+    public class AlgoCrypt
+    {
+        public static string Encrypt(string text, int key)
+        {
+            StringBuilder res = new("");
+            foreach (char c in text)
+            {
+                if (char.IsLetter(c))
+                {
+                    int offset = char.IsUpper(c) ? 'A' : 'a';
+                    res.Append((char)(((c + key - offset) % 26) + offset));
+                }
+                else
+                {
+                    res.Append(c);
+                }
+            }
+
+            return res.ToString();
+        }
+
+        public static string Decrypt(string text, int key)
+        {
+            StringBuilder res = new("");
+            foreach (char c in text)
+            {
+                if (char.IsLetter(c))
+                {
+                    int offset = char.IsUpper(c) ? 'A' : 'a';
+                    res.Append((char)(((c - key - offset + 26) % 26) + offset));
+                }
+                else
+                {
+                    res.Append(c);
+                }
+            }
+
+            return res.ToString();
+        }
+
+        public static void EncryptFile(string path, int key)
+        {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("File does not exist. Please check the path and try again.");
+                return;
+            }
+
+            try
+            {
+                string fileContent = File.ReadAllText(path);
+                string encryptedContent = Encrypt(fileContent, key);
+                File.WriteAllText($"C:\\Users\\dugya\\source\\repos\\EnDe\\enDir\\encrypted_{GetTimeStamp()}_{Path.GetFileName(path)}", encryptedContent);
+                Console.WriteLine("File encrypted successfully");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message.ToString());
+            }
+        }
+
+        public static string GetTimeStamp()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        public static void DecryptFile(string path, int key)
+        {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("File does not exist. Please check the path and try again.");
+                return;
+            }
+
+            try
+            {
+                string fileContent = File.ReadAllText(path);
+                string decryptedContent = Decrypt(fileContent, key);
+                File.WriteAllText($"C:\\Users\\dugya\\source\\repos\\EnDe\\deDir\\decrypted_{GetTimeStamp()}_{Path.GetFileName(path)}", decryptedContent);
+                Console.WriteLine("File decrypted successfully");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message.ToString());
+            }
+        }
+    }
+}
